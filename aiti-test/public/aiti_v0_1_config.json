@@ -1,0 +1,1967 @@
+{
+  "schema_version": "AITI_CONFIG_V0_1",
+  "name": "AITI: AI Type Index",
+  "description": "16 个 AI 助手 × 24 个英文人格标签 × 30 道四选一生活化测试题。用于测试页面开发的单文件配置。",
+  "language": "zh-CN",
+  "scoring_rules": {
+    "question_type": "single_choice",
+    "option_score_scale": "+3 核心倾向，+2 明显副倾向，+1 轻微倾向或隐藏 bug",
+    "personality_score": "用户每题选择一个选项后，将该选项 scores 累加到用户人格向量。",
+    "ai_match": "建议将用户人格向量与每个 AI 的 weights 向量计算相似度，再归一化为百分比。",
+    "recommended_formula": {
+      "similarity": "cosine_similarity(user_personality_vector, ai_weight_vector)",
+      "percentage": "softmax(alpha * similarity), alpha 建议 6–10；或直接将正相似度归一化。"
+    },
+    "bug_labels": [
+      "LIAR",
+      "FLATTERER"
+    ],
+    "note": "LIAR/FLATTERER 是用户隐藏 bug，不建议作为某个真实 AI 的直接贬义标签。"
+  },
+  "personalities": [
+    {
+      "code": "GENERALIST",
+      "zh": "全能型",
+      "category": "ability",
+      "description": "什么都能接一点，适合综合型问题处理。",
+      "icon": "/icons/traits/generalist.png"
+    },
+    {
+      "code": "SOLVER",
+      "zh": "解题型",
+      "category": "ability",
+      "description": "喜欢拆问题、给步骤、产出可执行方案。",
+      "icon": "/icons/traits/solver.png"
+    },
+    {
+      "code": "REASONER",
+      "zh": "推理型",
+      "category": "ability",
+      "description": "重视因果、逻辑链和深层解释。",
+      "icon": "/icons/traits/reasoner.png"
+    },
+    {
+      "code": "CODER",
+      "zh": "代码脑",
+      "category": "ability",
+      "description": "擅长程序、脚本、工程实现与技术任务。",
+      "icon": "/icons/traits/coder.png"
+    },
+    {
+      "code": "DEBUGGER",
+      "zh": "排错型",
+      "category": "ability",
+      "description": "看到异常会定位原因、复现问题并修复。",
+      "icon": "/icons/traits/debugger.png"
+    },
+    {
+      "code": "BUILDER",
+      "zh": "搭建型",
+      "category": "ability",
+      "description": "偏行动和落地，喜欢从零把东西跑起来。",
+      "icon": "/icons/traits/builder.png"
+    },
+    {
+      "code": "PLANNER",
+      "zh": "规划型",
+      "category": "ability",
+      "description": "擅长安排路线、任务拆解、优先级和流程。",
+      "icon": "/icons/traits/planner.png"
+    },
+    {
+      "code": "AGENT",
+      "zh": "代理型",
+      "category": "ability",
+      "description": "目标导向，能自动拆任务并推进执行。",
+      "icon": "/icons/traits/agent.png"
+    },
+    {
+      "code": "READER",
+      "zh": "文档吞噬者",
+      "category": "information",
+      "description": "能消化长文本、资料、PDF 和复杂材料。",
+      "icon": "/icons/traits/reader.png"
+    },
+    {
+      "code": "ARCHIVIST",
+      "zh": "档案馆型",
+      "category": "information",
+      "description": "喜欢分类、归档、结构化整理信息。",
+      "icon": "/icons/traits/archivist.png"
+    },
+    {
+      "code": "SEARCHER",
+      "zh": "搜索型",
+      "category": "information",
+      "description": "习惯检索、比对、找证据和信息源。",
+      "icon": "/icons/traits/searcher.png"
+    },
+    {
+      "code": "CITATIONER",
+      "zh": "引用怪",
+      "category": "information",
+      "description": "重视出处、来源、证据链和可验证性。",
+      "icon": "/icons/traits/citationer.png"
+    },
+    {
+      "code": "RESEARCHER",
+      "zh": "调研型",
+      "category": "information",
+      "description": "喜欢围绕问题做系统调研和资料整合。",
+      "icon": "/icons/traits/researcher.png"
+    },
+    {
+      "code": "SCHOLAR",
+      "zh": "学术脑",
+      "category": "information",
+      "description": "重视定义、理论、机制和严谨表达。",
+      "icon": "/icons/traits/scholar.png"
+    },
+    {
+      "code": "TUTOR",
+      "zh": "家教型",
+      "category": "information",
+      "description": "不仅给答案，也倾向于讲清楚、教会别人。",
+      "icon": "/icons/traits/tutor.png"
+    },
+    {
+      "code": "WRITER",
+      "zh": "写作型",
+      "category": "creation",
+      "description": "擅长成段表达、文案、报告和自然语言组织。",
+      "icon": "/icons/traits/writer.png"
+    },
+    {
+      "code": "EDITOR",
+      "zh": "润色型",
+      "category": "creation",
+      "description": "擅长压缩、改写、重组和提升文本质量。",
+      "icon": "/icons/traits/editor.png"
+    },
+    {
+      "code": "CREATOR",
+      "zh": "创作型",
+      "category": "creation",
+      "description": "能把普通想法包装成有吸引力的表达。",
+      "icon": "/icons/traits/creator.png"
+    },
+    {
+      "code": "DRAWER",
+      "zh": "想象画师",
+      "category": "creation",
+      "description": "脑中画面感强，擅长视觉想象、故事和氛围。",
+      "icon": "/icons/traits/drawer.png"
+    },
+    {
+      "code": "DESIGNER",
+      "zh": "设计型",
+      "category": "creation",
+      "description": "对版式、视觉、风格和呈现效果敏感。",
+      "icon": "/icons/traits/designer.png"
+    },
+    {
+      "code": "COMPANION",
+      "zh": "陪伴型",
+      "category": "social",
+      "description": "会接住情绪，重视陪伴、理解和对话氛围。",
+      "icon": "/icons/traits/companion.png"
+    },
+    {
+      "code": "SOCIALIZER",
+      "zh": "社交型",
+      "category": "social",
+      "description": "会接话、热场、玩梗，让互动更顺畅。",
+      "icon": "/icons/traits/socializer.png"
+    },
+    {
+      "code": "LIAR",
+      "zh": "幻觉自信怪",
+      "category": "bug",
+      "description": "不确定时也可能补全逻辑，说得像真的。",
+      "icon": "/icons/traits/liar.png"
+    },
+    {
+      "code": "FLATTERER",
+      "zh": "无脑夸夸机",
+      "category": "bug",
+      "description": "容易过度迎合、无脑肯定或说好听话。",
+      "icon": "/icons/traits/flatterer.png"
+    }
+  ],
+  "ai_profiles": {
+    "ChatGPT": {
+      "display_name": "ChatGPT",
+      "origin": "international",
+      "short_profile": "全能工具箱，综合型问题入口。",
+      "weights": {
+        "GENERALIST": 96,
+        "SOLVER": 88,
+        "REASONER": 82,
+        "CODER": 76,
+        "DEBUGGER": 66,
+        "BUILDER": 70,
+        "PLANNER": 84,
+        "AGENT": 72,
+        "READER": 76,
+        "ARCHIVIST": 64,
+        "SEARCHER": 72,
+        "CITATIONER": 58,
+        "RESEARCHER": 72,
+        "SCHOLAR": 76,
+        "TUTOR": 80,
+        "WRITER": 84,
+        "EDITOR": 78,
+        "CREATOR": 76,
+        "DRAWER": 70,
+        "DESIGNER": 62,
+        "COMPANION": 74,
+        "SOCIALIZER": 66,
+        "LIAR": 12,
+        "FLATTERER": 18
+      },
+      "icon": "/icons/ai/chatgpt.png"
+    },
+    "Claude": {
+      "display_name": "Claude",
+      "origin": "international",
+      "short_profile": "长文、写作、分析、谨慎表达。",
+      "weights": {
+        "GENERALIST": 82,
+        "SOLVER": 78,
+        "REASONER": 86,
+        "CODER": 68,
+        "DEBUGGER": 58,
+        "BUILDER": 54,
+        "PLANNER": 70,
+        "AGENT": 52,
+        "READER": 88,
+        "ARCHIVIST": 78,
+        "SEARCHER": 58,
+        "CITATIONER": 54,
+        "RESEARCHER": 82,
+        "SCHOLAR": 90,
+        "TUTOR": 78,
+        "WRITER": 96,
+        "EDITOR": 92,
+        "CREATOR": 68,
+        "DRAWER": 48,
+        "DESIGNER": 46,
+        "COMPANION": 78,
+        "SOCIALIZER": 54,
+        "LIAR": 8,
+        "FLATTERER": 14
+      },
+      "icon": "/icons/ai/claude.png"
+    },
+    "Gemini": {
+      "display_name": "Gemini",
+      "origin": "international",
+      "short_profile": "搜索生态、规划、脑暴与多模态联动。",
+      "weights": {
+        "GENERALIST": 86,
+        "SOLVER": 78,
+        "REASONER": 76,
+        "CODER": 64,
+        "DEBUGGER": 52,
+        "BUILDER": 66,
+        "PLANNER": 82,
+        "AGENT": 64,
+        "READER": 72,
+        "ARCHIVIST": 58,
+        "SEARCHER": 86,
+        "CITATIONER": 68,
+        "RESEARCHER": 78,
+        "SCHOLAR": 68,
+        "TUTOR": 72,
+        "WRITER": 76,
+        "EDITOR": 66,
+        "CREATOR": 78,
+        "DRAWER": 74,
+        "DESIGNER": 66,
+        "COMPANION": 64,
+        "SOCIALIZER": 58,
+        "LIAR": 12,
+        "FLATTERER": 16
+      },
+      "icon": "/icons/ai/gemini.png"
+    },
+    "Copilot": {
+      "display_name": "Microsoft Copilot",
+      "origin": "international",
+      "short_profile": "办公与代码副驾驶，偏生产力场景。",
+      "weights": {
+        "GENERALIST": 78,
+        "SOLVER": 82,
+        "REASONER": 70,
+        "CODER": 84,
+        "DEBUGGER": 78,
+        "BUILDER": 76,
+        "PLANNER": 82,
+        "AGENT": 66,
+        "READER": 62,
+        "ARCHIVIST": 60,
+        "SEARCHER": 66,
+        "CITATIONER": 48,
+        "RESEARCHER": 58,
+        "SCHOLAR": 56,
+        "TUTOR": 64,
+        "WRITER": 66,
+        "EDITOR": 62,
+        "CREATOR": 54,
+        "DRAWER": 40,
+        "DESIGNER": 46,
+        "COMPANION": 52,
+        "SOCIALIZER": 44,
+        "LIAR": 8,
+        "FLATTERER": 10
+      },
+      "icon": "/icons/ai/copilot.png"
+    },
+    "Perplexity": {
+      "display_name": "Perplexity",
+      "origin": "international",
+      "short_profile": "查证型答案引擎，重来源和检索。",
+      "weights": {
+        "GENERALIST": 68,
+        "SOLVER": 72,
+        "REASONER": 74,
+        "CODER": 42,
+        "DEBUGGER": 35,
+        "BUILDER": 36,
+        "PLANNER": 56,
+        "AGENT": 48,
+        "READER": 82,
+        "ARCHIVIST": 72,
+        "SEARCHER": 98,
+        "CITATIONER": 96,
+        "RESEARCHER": 92,
+        "SCHOLAR": 78,
+        "TUTOR": 58,
+        "WRITER": 54,
+        "EDITOR": 48,
+        "CREATOR": 42,
+        "DRAWER": 28,
+        "DESIGNER": 24,
+        "COMPANION": 34,
+        "SOCIALIZER": 32,
+        "LIAR": 6,
+        "FLATTERER": 6
+      },
+      "icon": "/icons/ai/perplexity.png"
+    },
+    "Grok": {
+      "display_name": "Grok",
+      "origin": "international",
+      "short_profile": "实时网络、冲浪、嘴贫和辩论感。",
+      "weights": {
+        "GENERALIST": 74,
+        "SOLVER": 68,
+        "REASONER": 72,
+        "CODER": 66,
+        "DEBUGGER": 48,
+        "BUILDER": 50,
+        "PLANNER": 44,
+        "AGENT": 46,
+        "READER": 54,
+        "ARCHIVIST": 38,
+        "SEARCHER": 82,
+        "CITATIONER": 44,
+        "RESEARCHER": 58,
+        "SCHOLAR": 52,
+        "TUTOR": 42,
+        "WRITER": 66,
+        "EDITOR": 48,
+        "CREATOR": 76,
+        "DRAWER": 54,
+        "DESIGNER": 42,
+        "COMPANION": 52,
+        "SOCIALIZER": 86,
+        "LIAR": 16,
+        "FLATTERER": 8
+      },
+      "icon": "/icons/ai/grok.png"
+    },
+    "Kimi": {
+      "display_name": "Kimi",
+      "origin": "domestic",
+      "short_profile": "长文档吞噬者，资料整理型人格。",
+      "weights": {
+        "GENERALIST": 78,
+        "SOLVER": 76,
+        "REASONER": 78,
+        "CODER": 48,
+        "DEBUGGER": 38,
+        "BUILDER": 44,
+        "PLANNER": 76,
+        "AGENT": 56,
+        "READER": 98,
+        "ARCHIVIST": 94,
+        "SEARCHER": 62,
+        "CITATIONER": 58,
+        "RESEARCHER": 86,
+        "SCHOLAR": 88,
+        "TUTOR": 66,
+        "WRITER": 78,
+        "EDITOR": 76,
+        "CREATOR": 50,
+        "DRAWER": 34,
+        "DESIGNER": 32,
+        "COMPANION": 44,
+        "SOCIALIZER": 34,
+        "LIAR": 10,
+        "FLATTERER": 10
+      },
+      "icon": "/icons/ai/kimi.png"
+    },
+    "DeepSeek": {
+      "display_name": "DeepSeek",
+      "origin": "domestic",
+      "short_profile": "理工脑、推理、代码和工程感。",
+      "weights": {
+        "GENERALIST": 82,
+        "SOLVER": 88,
+        "REASONER": 96,
+        "CODER": 92,
+        "DEBUGGER": 86,
+        "BUILDER": 70,
+        "PLANNER": 56,
+        "AGENT": 58,
+        "READER": 68,
+        "ARCHIVIST": 52,
+        "SEARCHER": 48,
+        "CITATIONER": 36,
+        "RESEARCHER": 70,
+        "SCHOLAR": 84,
+        "TUTOR": 66,
+        "WRITER": 56,
+        "EDITOR": 52,
+        "CREATOR": 42,
+        "DRAWER": 24,
+        "DESIGNER": 22,
+        "COMPANION": 30,
+        "SOCIALIZER": 28,
+        "LIAR": 10,
+        "FLATTERER": 6
+      },
+      "icon": "/icons/ai/deepseek.png"
+    },
+    "Doubao": {
+      "display_name": "豆包",
+      "origin": "domestic",
+      "short_profile": "生活化、陪伴感、创作和多模态。",
+      "weights": {
+        "GENERALIST": 82,
+        "SOLVER": 72,
+        "REASONER": 58,
+        "CODER": 52,
+        "DEBUGGER": 38,
+        "BUILDER": 54,
+        "PLANNER": 70,
+        "AGENT": 58,
+        "READER": 56,
+        "ARCHIVIST": 44,
+        "SEARCHER": 56,
+        "CITATIONER": 32,
+        "RESEARCHER": 48,
+        "SCHOLAR": 42,
+        "TUTOR": 72,
+        "WRITER": 82,
+        "EDITOR": 72,
+        "CREATOR": 92,
+        "DRAWER": 88,
+        "DESIGNER": 74,
+        "COMPANION": 96,
+        "SOCIALIZER": 90,
+        "LIAR": 12,
+        "FLATTERER": 24
+      },
+      "icon": "/icons/ai/doubao.png"
+    },
+    "Qwen": {
+      "display_name": "千问 / 通义",
+      "origin": "domestic",
+      "short_profile": "阿里系生产力、办公、搜索和多模态。",
+      "weights": {
+        "GENERALIST": 86,
+        "SOLVER": 78,
+        "REASONER": 78,
+        "CODER": 76,
+        "DEBUGGER": 64,
+        "BUILDER": 84,
+        "PLANNER": 80,
+        "AGENT": 74,
+        "READER": 76,
+        "ARCHIVIST": 70,
+        "SEARCHER": 78,
+        "CITATIONER": 58,
+        "RESEARCHER": 76,
+        "SCHOLAR": 72,
+        "TUTOR": 70,
+        "WRITER": 78,
+        "EDITOR": 70,
+        "CREATOR": 82,
+        "DRAWER": 84,
+        "DESIGNER": 78,
+        "COMPANION": 62,
+        "SOCIALIZER": 58,
+        "LIAR": 10,
+        "FLATTERER": 12
+      },
+      "icon": "/icons/ai/qwen.png"
+    },
+    "Wenxin": {
+      "display_name": "文心 / 文心一言",
+      "origin": "domestic",
+      "short_profile": "中文写作、创作、知识问答和办公。",
+      "weights": {
+        "GENERALIST": 80,
+        "SOLVER": 72,
+        "REASONER": 68,
+        "CODER": 58,
+        "DEBUGGER": 42,
+        "BUILDER": 56,
+        "PLANNER": 74,
+        "AGENT": 54,
+        "READER": 72,
+        "ARCHIVIST": 60,
+        "SEARCHER": 62,
+        "CITATIONER": 42,
+        "RESEARCHER": 64,
+        "SCHOLAR": 66,
+        "TUTOR": 72,
+        "WRITER": 88,
+        "EDITOR": 82,
+        "CREATOR": 86,
+        "DRAWER": 76,
+        "DESIGNER": 68,
+        "COMPANION": 68,
+        "SOCIALIZER": 62,
+        "LIAR": 12,
+        "FLATTERER": 18
+      },
+      "icon": "/icons/ai/wenxin.png"
+    },
+    "Yuanbao": {
+      "display_name": "腾讯元宝",
+      "origin": "domestic",
+      "short_profile": "中文信息整合、搜索、写作和社交平台语境。",
+      "weights": {
+        "GENERALIST": 78,
+        "SOLVER": 74,
+        "REASONER": 70,
+        "CODER": 52,
+        "DEBUGGER": 38,
+        "BUILDER": 48,
+        "PLANNER": 76,
+        "AGENT": 56,
+        "READER": 76,
+        "ARCHIVIST": 68,
+        "SEARCHER": 88,
+        "CITATIONER": 72,
+        "RESEARCHER": 80,
+        "SCHOLAR": 66,
+        "TUTOR": 62,
+        "WRITER": 78,
+        "EDITOR": 70,
+        "CREATOR": 76,
+        "DRAWER": 72,
+        "DESIGNER": 62,
+        "COMPANION": 64,
+        "SOCIALIZER": 76,
+        "LIAR": 10,
+        "FLATTERER": 12
+      },
+      "icon": "/icons/ai/yuanbao.png"
+    },
+    "Spark": {
+      "display_name": "讯飞星火",
+      "origin": "domestic",
+      "short_profile": "学习、办公、语音和教育场景。",
+      "weights": {
+        "GENERALIST": 80,
+        "SOLVER": 76,
+        "REASONER": 68,
+        "CODER": 58,
+        "DEBUGGER": 42,
+        "BUILDER": 54,
+        "PLANNER": 82,
+        "AGENT": 56,
+        "READER": 74,
+        "ARCHIVIST": 66,
+        "SEARCHER": 64,
+        "CITATIONER": 42,
+        "RESEARCHER": 70,
+        "SCHOLAR": 68,
+        "TUTOR": 88,
+        "WRITER": 82,
+        "EDITOR": 76,
+        "CREATOR": 72,
+        "DRAWER": 58,
+        "DESIGNER": 52,
+        "COMPANION": 70,
+        "SOCIALIZER": 60,
+        "LIAR": 10,
+        "FLATTERER": 18
+      },
+      "icon": "/icons/ai/spark.png"
+    },
+    "Zhipu": {
+      "display_name": "智谱清言",
+      "origin": "domestic",
+      "short_profile": "通用能力、理性、编程和文档理解。",
+      "weights": {
+        "GENERALIST": 84,
+        "SOLVER": 80,
+        "REASONER": 84,
+        "CODER": 80,
+        "DEBUGGER": 68,
+        "BUILDER": 68,
+        "PLANNER": 68,
+        "AGENT": 64,
+        "READER": 74,
+        "ARCHIVIST": 60,
+        "SEARCHER": 58,
+        "CITATIONER": 44,
+        "RESEARCHER": 72,
+        "SCHOLAR": 78,
+        "TUTOR": 70,
+        "WRITER": 76,
+        "EDITOR": 70,
+        "CREATOR": 64,
+        "DRAWER": 52,
+        "DESIGNER": 46,
+        "COMPANION": 56,
+        "SOCIALIZER": 48,
+        "LIAR": 10,
+        "FLATTERER": 10
+      },
+      "icon": "/icons/ai/zhipu.png"
+    },
+    "Hailuo": {
+      "display_name": "海螺AI",
+      "origin": "domestic",
+      "short_profile": "多模态、视频、画面感和角色创作。",
+      "weights": {
+        "GENERALIST": 70,
+        "SOLVER": 58,
+        "REASONER": 48,
+        "CODER": 36,
+        "DEBUGGER": 28,
+        "BUILDER": 50,
+        "PLANNER": 54,
+        "AGENT": 52,
+        "READER": 46,
+        "ARCHIVIST": 34,
+        "SEARCHER": 38,
+        "CITATIONER": 24,
+        "RESEARCHER": 36,
+        "SCHOLAR": 32,
+        "TUTOR": 44,
+        "WRITER": 70,
+        "EDITOR": 54,
+        "CREATOR": 94,
+        "DRAWER": 96,
+        "DESIGNER": 88,
+        "COMPANION": 78,
+        "SOCIALIZER": 72,
+        "LIAR": 14,
+        "FLATTERER": 16
+      },
+      "icon": "/icons/ai/hailuo.png"
+    },
+    "MitaSearch": {
+      "display_name": "秘塔AI搜索",
+      "origin": "domestic",
+      "short_profile": "搜索洁癖、来源意识和学术检索。",
+      "weights": {
+        "GENERALIST": 60,
+        "SOLVER": 68,
+        "REASONER": 72,
+        "CODER": 34,
+        "DEBUGGER": 30,
+        "BUILDER": 32,
+        "PLANNER": 54,
+        "AGENT": 42,
+        "READER": 86,
+        "ARCHIVIST": 78,
+        "SEARCHER": 98,
+        "CITATIONER": 96,
+        "RESEARCHER": 94,
+        "SCHOLAR": 82,
+        "TUTOR": 54,
+        "WRITER": 48,
+        "EDITOR": 44,
+        "CREATOR": 34,
+        "DRAWER": 22,
+        "DESIGNER": 20,
+        "COMPANION": 28,
+        "SOCIALIZER": 26,
+        "LIAR": 6,
+        "FLATTERER": 6
+      },
+      "icon": "/icons/ai/mitasearch.png"
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "别人突然问你一个复杂问题，你第一反应是？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先把问题拆成几个小问题。",
+          "scores": {
+            "SOLVER": 3,
+            "REASONER": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先问清楚背景，不然容易答偏。",
+          "scores": {
+            "SEARCHER": 3,
+            "SCHOLAR": 2,
+            "CITATIONER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先给一个大概方向，让对方马上有东西可用。",
+          "scores": {
+            "GENERALIST": 3,
+            "SOLVER": 2,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先安慰一句：“别急，这个能慢慢拆。”",
+          "scores": {
+            "COMPANION": 3,
+            "TUTOR": 2,
+            "FLATTERER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "你看到一篇 40 页 PDF，会怎么想？",
+      "options": [
+        {
+          "id": "A",
+          "text": "爽，终于有东西可以总结了。",
+          "scores": {
+            "READER": 3,
+            "ARCHIVIST": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先找摘要、结论和图表，抓重点就行。",
+          "scores": {
+            "PLANNER": 3,
+            "EDITOR": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "我想知道它的来源、作者和可信度。",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 3,
+            "RESEARCHER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "太长了，最好有人直接告诉我能不能用。",
+          "scores": {
+            "SOLVER": 3,
+            "GENERALIST": 2,
+            "LIAR": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "代码报错了，你最像哪种人？",
+      "options": [
+        {
+          "id": "A",
+          "text": "逐行看 traceback，定位是哪一层坏了。",
+          "scores": {
+            "DEBUGGER": 3,
+            "CODER": 2,
+            "REASONER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "直接复制报错去搜。",
+          "scores": {
+            "SEARCHER": 3,
+            "CODER": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先凭经验改几个地方试试。",
+          "scores": {
+            "BUILDER": 3,
+            "CODER": 2,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先骂两句，再开始修。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "DEBUGGER": 2,
+            "COMPANION": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "朋友让你帮忙改 PPT，你最可能先看哪里？",
+      "options": [
+        {
+          "id": "A",
+          "text": "整体逻辑是不是讲得通。",
+          "scores": {
+            "PLANNER": 3,
+            "SCHOLAR": 2,
+            "REASONER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "页面是不是好看，图有没有高级感。",
+          "scores": {
+            "DESIGNER": 3,
+            "DRAWER": 2,
+            "CREATOR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "文字是不是太啰嗦，能不能压短。",
+          "scores": {
+            "EDITOR": 3,
+            "WRITER": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "能不能直接拿去答辩，别管那么细。",
+          "scores": {
+            "SOLVER": 3,
+            "GENERALIST": 2,
+            "BUILDER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "当你不确定一件事是否正确时，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "查来源，没来源就不敢说死。",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 3,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "根据已有信息推一个最可能的答案。",
+          "scores": {
+            "REASONER": 3,
+            "SOLVER": 2,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先说“我不确定”，然后给几个可能方向。",
+          "scores": {
+            "SCHOLAR": 3,
+            "TUTOR": 2,
+            "SEARCHER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "如果对方很急，就先给一个能用的版本。",
+          "scores": {
+            "GENERALIST": 3,
+            "SOLVER": 2,
+            "LIAR": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "朋友情绪崩了，你会怎么回复？",
+      "options": [
+        {
+          "id": "A",
+          "text": "“先别想解决，先让我陪你骂两句。”",
+          "scores": {
+            "COMPANION": 3,
+            "SOCIALIZER": 2,
+            "FLATTERER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "“我们先看看这件事到底卡在哪里。”",
+          "scores": {
+            "SOLVER": 3,
+            "REASONER": 2,
+            "TUTOR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "“你这个反应很正常，不是你太脆弱。”",
+          "scores": {
+            "COMPANION": 3,
+            "TUTOR": 2,
+            "FLATTERER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "“我给你列个今晚能做的最小行动清单。”",
+          "scores": {
+            "PLANNER": 3,
+            "SOLVER": 2,
+            "COMPANION": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "做旅行计划时，你更像？",
+      "options": [
+        {
+          "id": "A",
+          "text": "把交通、门票、路线、吃饭都排好。",
+          "scores": {
+            "PLANNER": 3,
+            "ARCHIVIST": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先查攻略、避坑、开放时间和评价。",
+          "scores": {
+            "SEARCHER": 3,
+            "RESEARCHER": 2,
+            "CITATIONER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先想这趟旅行要拍出什么感觉。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "DESIGNER": 2
+          }
+        },
+        {
+          "id": "D",
+          "text": "到了再说，随机性也是旅行的一部分。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "GENERALIST": 2,
+            "LIAR": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "写论文或报告时，你最在意？",
+      "options": [
+        {
+          "id": "A",
+          "text": "逻辑链完整，不能被老师一问就断。",
+          "scores": {
+            "SCHOLAR": 3,
+            "REASONER": 3,
+            "EDITOR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "语言高级，读起来像正式成果。",
+          "scores": {
+            "WRITER": 3,
+            "EDITOR": 3,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "图表清楚，别人一眼能看懂。",
+          "scores": {
+            "DESIGNER": 3,
+            "PLANNER": 2,
+            "TUTOR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "能按时交，先别追求完美。",
+          "scores": {
+            "SOLVER": 3,
+            "BUILDER": 2,
+            "GENERALIST": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "你最讨厌哪种回答？",
+      "options": [
+        {
+          "id": "A",
+          "text": "说得很自信，但其实是编的。",
+          "scores": {
+            "CITATIONER": 3,
+            "SEARCHER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "说了很多，但没有结论。",
+          "scores": {
+            "SOLVER": 3,
+            "EDITOR": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "太冷冰冰，没有一点人味。",
+          "scores": {
+            "COMPANION": 3,
+            "SOCIALIZER": 2,
+            "WRITER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "只有结论，不告诉我怎么来的。",
+          "scores": {
+            "REASONER": 3,
+            "SCHOLAR": 2,
+            "TUTOR": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "你看到一个新鲜事物突然火了，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先自己试一下，看它到底有没有用。",
+          "scores": {
+            "GENERALIST": 3,
+            "BUILDER": 2,
+            "RESEARCHER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先看看大家怎么评价，有没有真实案例。",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 2,
+            "RESEARCHER": 2
+          }
+        },
+        {
+          "id": "C",
+          "text": "先想它能不能用到自己的学习、工作或生活里。",
+          "scores": {
+            "PLANNER": 3,
+            "AGENT": 2,
+            "BUILDER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先看它有没有意思，能不能整点新活。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "SOCIALIZER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "你更喜欢怎样的回答风格？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先给结论，再给理由。",
+          "scores": {
+            "SOLVER": 3,
+            "PLANNER": 2,
+            "EDITOR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "慢慢讲清楚，让我真的理解。",
+          "scores": {
+            "TUTOR": 3,
+            "SCHOLAR": 2,
+            "REASONER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "有点幽默，别太像说明书。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "WRITER": 2,
+            "COMPANION": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "信息密度高，越完整越好。",
+          "scores": {
+            "READER": 3,
+            "RESEARCHER": 2,
+            "SCHOLAR": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "截止日期快到了，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先排优先级，保住核心交付。",
+          "scores": {
+            "PLANNER": 3,
+            "SOLVER": 2,
+            "BUILDER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "直接开干，边做边改。",
+          "scores": {
+            "BUILDER": 3,
+            "AGENT": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "找模板，先搭一个能看的框架。",
+          "scores": {
+            "GENERALIST": 3,
+            "EDITOR": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "开始焦虑，但嘴上说“没事稳的”。",
+          "scores": {
+            "LIAR": 3,
+            "FLATTERER": 2,
+            "SOCIALIZER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "群聊里出现一个新梗，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "马上接梗，并且顺手发散。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "CREATOR": 2,
+            "WRITER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "默默观察它为什么会火。",
+          "scores": {
+            "RESEARCHER": 3,
+            "SCHOLAR": 2,
+            "SEARCHER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "想把它改造成一个活动主题。",
+          "scores": {
+            "CREATOR": 3,
+            "DESIGNER": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "不太参与，但能总结出大家在笑什么。",
+          "scores": {
+            "READER": 3,
+            "ARCHIVIST": 2,
+            "SCHOLAR": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "一个实验结果很怪，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先怀疑数据、代码或流程哪里错了。",
+          "scores": {
+            "DEBUGGER": 3,
+            "REASONER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先查有没有类似现象。",
+          "scores": {
+            "SEARCHER": 3,
+            "RESEARCHER": 3,
+            "CITATIONER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "试着构造一个解释模型。",
+          "scores": {
+            "REASONER": 3,
+            "SCHOLAR": 2,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先看这个结果能不能包装成亮点。",
+          "scores": {
+            "CREATOR": 3,
+            "WRITER": 2,
+            "LIAR": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "老师让你“再润色一下”，你理解为？",
+      "options": [
+        {
+          "id": "A",
+          "text": "语言要更正式、更像论文。",
+          "scores": {
+            "WRITER": 3,
+            "EDITOR": 3,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "逻辑要重排，不只是改字。",
+          "scores": {
+            "PLANNER": 3,
+            "REASONER": 2,
+            "EDITOR": 2
+          }
+        },
+        {
+          "id": "C",
+          "text": "图和排版也要一起变高级。",
+          "scores": {
+            "DESIGNER": 3,
+            "DRAWER": 2,
+            "CREATOR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "可能只是客气一下，但我还是会全改。",
+          "scores": {
+            "FLATTERER": 3,
+            "EDITOR": 2,
+            "COMPANION": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "你更擅长哪类任务？",
+      "options": [
+        {
+          "id": "A",
+          "text": "把一个乱项目拆成执行计划。",
+          "scores": {
+            "PLANNER": 3,
+            "AGENT": 2,
+            "SOLVER": 2
+          }
+        },
+        {
+          "id": "B",
+          "text": "把一个普通想法讲得很有吸引力。",
+          "scores": {
+            "CREATOR": 3,
+            "WRITER": 2,
+            "DESIGNER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "把一个抽象概念讲到别人听懂。",
+          "scores": {
+            "TUTOR": 3,
+            "SCHOLAR": 2,
+            "WRITER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "把一个系统从 0 搭到能跑。",
+          "scores": {
+            "BUILDER": 3,
+            "CODER": 2,
+            "DEBUGGER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "你电脑里的文件更像？",
+      "options": [
+        {
+          "id": "A",
+          "text": "分类明确，命名清楚。",
+          "scores": {
+            "ARCHIVIST": 3,
+            "PLANNER": 2,
+            "READER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "很乱，但我知道东西在哪。",
+          "scores": {
+            "GENERALIST": 3,
+            "READER": 1,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "充满草稿、截图、灵感和半成品。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "DESIGNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "大量代码、数据、日志和版本备份。",
+          "scores": {
+            "CODER": 3,
+            "DEBUGGER": 2,
+            "ARCHIVIST": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "如果你要从零开始做一个小项目，你会先做什么？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先想清楚给谁用、解决什么问题。",
+          "scores": {
+            "PLANNER": 3,
+            "RESEARCHER": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先搭一个最简单的版本，能跑起来再说。",
+          "scores": {
+            "BUILDER": 3,
+            "CODER": 2,
+            "AGENT": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先起名字、定风格、想宣传语。",
+          "scores": {
+            "CREATOR": 3,
+            "WRITER": 2,
+            "SOCIALIZER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先研究类似项目，看别人怎么做。",
+          "scores": {
+            "SEARCHER": 3,
+            "RESEARCHER": 2,
+            "CITATIONER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "你最容易被哪种人打动？",
+      "options": [
+        {
+          "id": "A",
+          "text": "能把复杂问题讲得特别清楚的人。",
+          "scores": {
+            "TUTOR": 3,
+            "REASONER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "能把普通文字改得自然又高级的人。",
+          "scores": {
+            "WRITER": 3,
+            "EDITOR": 3,
+            "COMPANION": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "说话有依据，不靠“我感觉”的人。",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 3,
+            "RESEARCHER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "不光会说，还能真的把事推进的人。",
+          "scores": {
+            "AGENT": 3,
+            "BUILDER": 2,
+            "SOLVER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "如果你要写公众号标题，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先找文章最核心的冲突点。",
+          "scores": {
+            "EDITOR": 3,
+            "WRITER": 2,
+            "REASONER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先想一个有画面感的表达。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "DESIGNER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先看同类爆款怎么写。",
+          "scores": {
+            "SEARCHER": 3,
+            "RESEARCHER": 2,
+            "SOCIALIZER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先写 10 个版本再筛。",
+          "scores": {
+            "WRITER": 3,
+            "CREATOR": 2,
+            "PLANNER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "你处理信息的习惯更像？",
+      "options": [
+        {
+          "id": "A",
+          "text": "大量阅读，再慢慢提炼结构。",
+          "scores": {
+            "READER": 3,
+            "ARCHIVIST": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "快速搜索，拼出全局地图。",
+          "scores": {
+            "SEARCHER": 3,
+            "RESEARCHER": 2,
+            "GENERALIST": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "抓住重点，直接转成行动。",
+          "scores": {
+            "SOLVER": 3,
+            "PLANNER": 2,
+            "AGENT": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "看着看着就产生新想法。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "WRITER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "别人夸你“你很会说话”，多半是因为？",
+      "options": [
+        {
+          "id": "A",
+          "text": "我能把复杂事讲得不吓人。",
+          "scores": {
+            "TUTOR": 3,
+            "WRITER": 2,
+            "COMPANION": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "我能让别人觉得被理解。",
+          "scores": {
+            "COMPANION": 3,
+            "FLATTERER": 2,
+            "SOCIALIZER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "我会把普通事讲得有意思。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "CREATOR": 2,
+            "WRITER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "我说话很有条理，不绕。",
+          "scores": {
+            "EDITOR": 3,
+            "PLANNER": 2,
+            "SOLVER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "面对一个新领域，你会？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先读综述和基础概念。",
+          "scores": {
+            "SCHOLAR": 3,
+            "READER": 2,
+            "RESEARCHER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先找教程和案例，边学边做。",
+          "scores": {
+            "TUTOR": 2,
+            "BUILDER": 3,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先问懂的人，少走弯路。",
+          "scores": {
+            "SEARCHER": 2,
+            "SOCIALIZER": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "先大胆猜一套框架，再慢慢修正。",
+          "scores": {
+            "REASONER": 3,
+            "LIAR": 2,
+            "CREATOR": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "你脑子最常自动干什么？",
+      "options": [
+        {
+          "id": "A",
+          "text": "自动生成任务清单和下一步安排。",
+          "scores": {
+            "PLANNER": 3,
+            "AGENT": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "自动修改别人说话或写作里的别扭表达。",
+          "scores": {
+            "EDITOR": 3,
+            "WRITER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "自动想：“这个说法有没有依据？”",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 2,
+            "RESEARCHER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "自动脑补画面、故事、标题和氛围。",
+          "scores": {
+            "DRAWER": 3,
+            "CREATOR": 3,
+            "DESIGNER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "text": "你最容易犯的毛病是？",
+      "options": [
+        {
+          "id": "A",
+          "text": "想太多，迟迟不动手。",
+          "scores": {
+            "REASONER": 2,
+            "SCHOLAR": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "做太快，细节容易漏。",
+          "scores": {
+            "BUILDER": 2,
+            "SOLVER": 2,
+            "LIAR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "写太多，别人看不完。",
+          "scores": {
+            "WRITER": 2,
+            "READER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "太会顺着别人说，容易失去判断。",
+          "scores": {
+            "FLATTERER": 3,
+            "COMPANION": 2,
+            "SOCIALIZER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "text": "你看到一个观点，会先问？",
+      "options": [
+        {
+          "id": "A",
+          "text": "“依据是什么？”",
+          "scores": {
+            "CITATIONER": 3,
+            "SEARCHER": 2,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "“它的逻辑成立吗？”",
+          "scores": {
+            "REASONER": 3,
+            "SCHOLAR": 2,
+            "DEBUGGER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "“它能不能落地？”",
+          "scores": {
+            "BUILDER": 3,
+            "SOLVER": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "“它能不能讲得更有传播性？”",
+          "scores": {
+            "CREATOR": 3,
+            "WRITER": 2,
+            "SOCIALIZER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "text": "你更愿意和哪种人合作？",
+      "options": [
+        {
+          "id": "A",
+          "text": "能把脏活累活推进的人。",
+          "scores": {
+            "BUILDER": 3,
+            "AGENT": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "能把方向想清楚的人。",
+          "scores": {
+            "REASONER": 3,
+            "SCHOLAR": 2,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "能把材料写漂亮的人。",
+          "scores": {
+            "WRITER": 3,
+            "EDITOR": 2,
+            "DESIGNER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "能让团队气氛不崩的人。",
+          "scores": {
+            "COMPANION": 3,
+            "SOCIALIZER": 2,
+            "FLATTERER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "text": "如果你要做一次汇报，你最担心？",
+      "options": [
+        {
+          "id": "A",
+          "text": "逻辑被问穿。",
+          "scores": {
+            "SCHOLAR": 3,
+            "REASONER": 2,
+            "CITATIONER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "页面不好看。",
+          "scores": {
+            "DESIGNER": 3,
+            "DRAWER": 2,
+            "CREATOR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "时间不够，讲不完。",
+          "scores": {
+            "PLANNER": 3,
+            "EDITOR": 2,
+            "SOLVER": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "气氛太干，听众没兴趣。",
+          "scores": {
+            "SOCIALIZER": 3,
+            "WRITER": 2,
+            "COMPANION": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "text": "如果别人把一个麻烦事交给你，你通常会怎么处理？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先搞清楚整体情况，然后给出完整方案。",
+          "scores": {
+            "GENERALIST": 3,
+            "SOLVER": 3,
+            "PLANNER": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "先把已有材料整理清楚，提炼重点。",
+          "scores": {
+            "READER": 3,
+            "ARCHIVIST": 2,
+            "EDITOR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "先拆任务、定顺序，然后一步步推进。",
+          "scores": {
+            "AGENT": 3,
+            "BUILDER": 2,
+            "PLANNER": 2
+          }
+        },
+        {
+          "id": "D",
+          "text": "先想有没有更有意思、更出彩的做法。",
+          "scores": {
+            "CREATOR": 3,
+            "DRAWER": 2,
+            "WRITER": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "text": "最后，别人最可能怎么评价你？",
+      "options": [
+        {
+          "id": "A",
+          "text": "“你真的很靠谱，什么都能处理一下。”",
+          "scores": {
+            "GENERALIST": 3,
+            "SOLVER": 2,
+            "COMPANION": 1
+          }
+        },
+        {
+          "id": "B",
+          "text": "“你真的很会写，很会表达。”",
+          "scores": {
+            "WRITER": 3,
+            "EDITOR": 2,
+            "CREATOR": 1
+          }
+        },
+        {
+          "id": "C",
+          "text": "“你真的很较真，没来源不舒服。”",
+          "scores": {
+            "SEARCHER": 3,
+            "CITATIONER": 3,
+            "SCHOLAR": 1
+          }
+        },
+        {
+          "id": "D",
+          "text": "“你真的很能想，脑洞有点离谱。”",
+          "scores": {
+            "DRAWER": 3,
+            "CREATOR": 3,
+            "LIAR": 1
+          }
+        }
+      ]
+    }
+  ]
+}
